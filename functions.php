@@ -79,7 +79,7 @@ function isValidUrl($url, $link) {
 }
 }
 
-function getPlayer($title, $artist, $userpath, $songpath) { ?>
+function getPlayer($id, $title, $artist, $userpath, $songpath) { ?>
 
 <div class="nav nav-list bs-docs-sidenav">
         <div class="row justify-content-start">
@@ -92,12 +92,23 @@ function getPlayer($title, $artist, $userpath, $songpath) { ?>
             </div>
             <div class = "col-sm-3">
             <div class = "votes">
-                <img id="upvote" src="http://soundtron/img/up-arrow.png"> <img id="downvote" src="http://soundtron/img/down-arrow.png"><br>
+                <img id="upvote-<?php echo($id); ?>" class="upvote" src="http://soundtron/img/up-arrow.png"> <img id="downvote-<?php echo($id); ?>" class="downvote" src="http://soundtron/img/down-arrow.png"><br>
                 <p style = "color:#9b3581; text-align:left; padding: 5px;">200</p>
             </div>
             </div>
         </div>
 </div>
+
+<script>
+$(<?php echo("\"#upvote-" . $id . "\""); ?>).on("click", function() {
+	console.log("upvote");
+});
+
+$(<?php echo("\"#downvote-" . $id . "\""); ?>).on("click", function() {
+	console.log("downvote");
+});
+</script>
+
 <br>
 
 
