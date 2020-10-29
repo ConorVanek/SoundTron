@@ -1,0 +1,7 @@
+CREATE TABLE votes (
+    id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    song_id INT NOT NULL,
+    user_id INT NOT NULL,
+    vote INT NOT NULL,
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+);
