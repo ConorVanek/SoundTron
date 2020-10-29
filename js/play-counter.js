@@ -1,5 +1,9 @@
+$( document ).ready(function() {
+
 var i = 0;
+var songid;
 var players = [];
+var player;
 
 function getFileName(url) {
 	var filename = url.substring(url.lastIndexOf('/')+1);
@@ -34,6 +38,10 @@ $("audio").on("timeupdate", function(){
 			
 			if(players[player]>play_counter) {
 				players[player] = 0;
-				console.log("reset");
+				songid = $(this).attr("id");
+				$.post("http://soundtron/addplay.php", {song: songid});
+				console.log("player: " + $(this).attr("id"));
 			}
+});
+
 });

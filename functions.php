@@ -1,7 +1,7 @@
 <?php
 
 function add_song($username, $title, $category, $filename, $link) {
-    $sql = "INSERT INTO songs (username, title, category, filename) VALUES (?, ?, ?, ?)";
+    $sql = "INSERT INTO songs (username, title, category, filename, plays) VALUES (?, ?, ?, ?, 0)";
          
         if($stmt = mysqli_prepare($link, $sql)){
             // Bind variables to the prepared statement as parameters
@@ -13,6 +13,26 @@ function add_song($username, $title, $category, $filename, $link) {
             }
         }
         mysqli_stmt_close($stmt);
+}
+
+function addPlay($songid, $link) {
+	$sql = "UPDATE songs SET plays = plays + 1 WHERE id = ?";
+        
+    if($stmt = mysqli_prepare($link, $sql)){
+        // Bind variables to the prepared statement as parameters
+        mysqli_stmt_bind_param($stmt, "i", $songid);
+
+        // Attempt to execute the prepared statement
+        if(mysqli_stmt_execute($stmt)){
+            // Votes updated successfully.
+            echo("AddPlay Success!");
+        } else{
+            echo "Oops! Something went wrong. Please try again later.";
+        }
+
+        // Close statement
+        mysqli_stmt_close($stmt);
+    }
 }
 
 function isloggedin() {
@@ -79,16 +99,17 @@ function isValidUrl($url, $link) {
 }
 }
 
-function getPlayer($id, $title, $artist, $userpath, $songpath, $link) { ?>
+function getPlayer($id, $title, $artist, $userpath, $songpath, $plays, $link) { ?>
 
 <div class="nav nav-list bs-docs-sidenav">
         <div class="row justify-content-start">
             <div class = "col-sm-9">
                 <h1><?php echo($title); ?></h1>
                 <a href="<?php echo($userpath); ?>"><h4 style="color: #b417b4;"><?php echo($artist); ?></h4></a>
-                <audio style="100%" controls>
+                <audio id="<?php echo($id); ?>" style="width: 100%;" controls>
                     <source src="<?php echo($songpath); ?>" type="audio/mpeg">
                 </audio>
+				<h1>Plays: <?php echo($plays); ?></h1>
             </div>
             <div class = "col-sm-3">
             <div class = "votes">

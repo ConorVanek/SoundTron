@@ -21,6 +21,11 @@
     </script>
     <meta name="generator" content="Hugo 0.75.1" />
     <title>/rock</title>
+	
+	<meta http-equiv='cache-control' content='no-cache'> 
+	<meta http-equiv='expires' content='0'> 
+	<meta http-equiv='pragma' content='no-cache'> 
+
     <meta content="text/html;charset=utf-8" http-equiv="Content-Type">
     <meta content="utf-8" http-equiv="encoding">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -79,7 +84,7 @@
     <div class="span9 bs-docs-sidebar">
 
 <?php
-$sql = "SELECT id, username, title, filename FROM songs WHERE category='rock'";
+$sql = "SELECT id, username, title, filename, plays FROM songs WHERE category='rock'";
 $result = mysqli_query($link, $sql);
 
 
@@ -91,7 +96,7 @@ if (mysqli_num_rows($result) > 0) {
 //    echo ("<ul class=\"nav nav-list bs-docs-sidenav\"><li><h1 style=\"color:black;\">" . $row["title"] . "</h1><a href=\"../" . $url . "\"><h4 style=\"color: #b417b4;\">" . $row["username"] . "</h4></a><br> <audio controls controlsList=\"nodownload\">". "<source src=\"./" . $row["filename"] . "\" type=\"audio/mpeg\"></audio></li></ul><br>");
     $userpath = "../" . $url;
     $songpath = "./" . $row["filename"]; 
-    getPlayer($row["id"], $row["title"], $row["username"], $userpath, $songpath, $link);
+    getPlayer($row["id"], $row["title"], $row["username"], $userpath, $songpath, $row["plays"], $link);
 
 
 }} else {
