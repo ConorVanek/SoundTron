@@ -102,10 +102,16 @@ function getPlayer($id, $title, $artist, $userpath, $songpath) { ?>
 <script>
 $(<?php echo("\"#upvote-" . $id . "\""); ?>).on("click", function() {
 	console.log("upvote");
+	$.post("http://soundtron/upvote.php", {id: <?php echo($id); ?>}, function(data) {
+		alert(data);
+	});
 });
 
 $(<?php echo("\"#downvote-" . $id . "\""); ?>).on("click", function() {
 	console.log("downvote");
+	$.post("http://soundtron/downvote.php", {id: <?php echo($id); ?>}, function(data) {
+		alert(data);
+	});
 });
 </script>
 
