@@ -91,7 +91,7 @@ if (mysqli_num_rows($result) > 0) {
 //    echo ("<ul class=\"nav nav-list bs-docs-sidenav\"><li><h1 style=\"color:black;\">" . $row["title"] . "</h1><a href=\"../" . $url . "\"><h4 style=\"color: #b417b4;\">" . $row["username"] . "</h4></a><br> <audio controls controlsList=\"nodownload\">". "<source src=\"./" . $row["filename"] . "\" type=\"audio/mpeg\"></audio></li></ul><br>");
     $userpath = "../" . $url;
     $songpath = "./" . $row["filename"]; 
-    getPlayer($row["id"], $row["title"], $row["username"], $userpath, $songpath);
+    getPlayer($row["id"], $row["title"], $row["username"], $userpath, $songpath, $link);
 
 
 }} else {
