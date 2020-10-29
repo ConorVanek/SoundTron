@@ -1,0 +1,8 @@
+#<IfModule mod_rewrite.c>
+
+RewriteEngine On
+RewriteCond %{SCRIPT_FILENAME} !-f
+RewriteCond %{SCRIPT_FILENAME} !-d
+RewriteRule   ^(.+)$   profile.php?alt_url=$1 [L,QSA]
+
+#</IfModule>
