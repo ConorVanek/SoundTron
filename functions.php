@@ -99,7 +99,7 @@ function isValidUrl($url, $link) {
 }
 }
 
-function getPlayer($id, $title, $artist, $userpath, $songpath, $plays, $link) { ?>
+function getPlayer($id, $title, $artist, $userpath, $songpath, $plays, $userid, $link) { ?>
 
 <div class="nav nav-list bs-docs-sidenav">
         <div class="row justify-content-start">
@@ -113,7 +113,7 @@ function getPlayer($id, $title, $artist, $userpath, $songpath, $plays, $link) { 
             </div>
             <div class = "col-sm-3">
             <div class = "votes">
-                <img id="upvote-<?php echo($id); ?>" class="upvote" src="http://soundtron/img/up-arrow.png"> <img id="downvote-<?php echo($id); ?>" class="downvote" src="http://soundtron/img/down-arrow.png"><br>
+                <img id="upvote-<?php echo($id); ?>" class="upvote" src="http://soundtron/img/up-arrow<?php if(isUpvoted($id, $userid, $link)) {echo("-hl");} ?>.png"> <img id="downvote-<?php echo($id); ?>" class="downvote" src="http://soundtron/img/down-arrow<?php if(isDownvoted($id, $userid, $link)) {echo("-hl");} ?>.png"><br>
                 <p style = "color:#9b3581; text-align:left; padding: 5px;"><?php echo(getVotes($id, $link)); ?></p>
             </div>
             </div>
@@ -122,14 +122,36 @@ function getPlayer($id, $title, $artist, $userpath, $songpath, $plays, $link) { 
 
 <script>
 $(<?php echo("\"#upvote-" . $id . "\""); ?>).on("click", function() {
-	console.log("upvote");
+    console.log("upvote");
+    //change arrow icon
+    <?php if($userid != "0") { ?>
+        if(this.src == "http://soundtron/img/up-arrow.png") {
+            if($(<?php echo("\"#downvote-" . $id . "\""); ?>).attr("src") == "http://soundtron/img/down-arrow-hl.png") {
+                $(<?php echo("\"#downvote-" . $id . "\""); ?>).attr("src") = "http://soundtron/img/down-arrow.png";
+            }
+            this.src = "http://soundtron/img/up-arrow-hl.png";
+        } else if(this.src == "http://soundtron/img/up-arrow-hl.png") {
+            this.src = "http://soundtron/img/up-arrow.png";
+        }
+    <?php } ?>
+    // update table
 	$.post("http://soundtron/upvote.php", {id: <?php echo($id); ?>}, function(data) {
 		alert(data);
 	});
 });
 
 $(<?php echo("\"#downvote-" . $id . "\""); ?>).on("click", function() {
-	console.log("downvote");
+    console.log("downvote");
+    <?php if($userid != "0") { ?>
+        if(this.src == "http://soundtron/img/down-arrow.png") {
+            if($(<?php echo("\"#upvote-" . $id . "\""); ?>).attr("src") == "http://soundtron/img/up-arrow-hl.png") {
+                $(<?php echo("\"#upvote-" . $id . "\""); ?>).attr("src") = "http://soundtron/img/up-arrow.png";
+            }
+            this.src = "http://soundtron/img/down-arrow-hl.png";
+        } else if(this.src == "http://soundtron/img/down-arrow-hl.png") {
+            this.src = "http://soundtron/img/down-arrow.png";
+        }
+    <?php } ?>
 	$.post("http://soundtron/downvote.php", {id: <?php echo($id); ?>}, function(data) {
 		alert(data);
 	});
@@ -242,6 +264,45 @@ function getVotes($songid, $link) {
     $votes = $row["sumvotes"];
 	}
 	return $votes;
+}
+
+function isUpvoted($id, $userid, $link) {
+	$sql = "SELECT * FROM votes WHERE song_id = " . $id . " AND user_id = " . $userid;
+	
+    $result = mysqli_query($link, $sql);
+    $rowcount = mysqli_num_rows($result);
+
+    if($rowcount == 0) {
+        return false;
+    } else {
+       while($row = mysqli_fetch_assoc($result)) {
+      $vote = $row["vote"]; 
+    	}
+    	if($vote == 1) {
+             return true;
+      } else {
+          return false;
+      }
+    }
+}
+
+function isDownvoted($id, $userid, $link) {
+	$sql = "SELECT * FROM votes WHERE song_id = " . $id . " AND user_id = " . $userid;
+	
+    $result = mysqli_query($link, $sql);
+    $rowcount = mysqli_num_rows($result);
+    if($rowcount == 0) {
+        return false;
+    } else {
+        while($row = mysqli_fetch_assoc($result)) {
+            $vote = $row["vote"];
+	    }
+	    if($vote == -1) {
+          return true;
+        } else {
+           return false;
+        }
+    }
 }
 
 ?>

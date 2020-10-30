@@ -3,6 +3,7 @@
     require_once('../config.php');
     require_once('../functions.php');
     $username = isloggedin()? $_SESSION["username"] : "";
+    $userid = isloggedin()? $_SESSION["id"] : "0";
 ?>
 
 <!doctype html>
@@ -10,7 +11,10 @@
 <html>
     <head>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+
     <script>
+
         $(function(){
             $("audio").on("play", function() {
                 $("audio").not(this).each(function(index, audio) {
@@ -71,6 +75,7 @@
     </div>
 </nav>
 
+
 <div id="content" class="container">
 
 <div class="row-fluid navmargin">
@@ -96,7 +101,7 @@ if (mysqli_num_rows($result) > 0) {
 //    echo ("<ul class=\"nav nav-list bs-docs-sidenav\"><li><h1 style=\"color:black;\">" . $row["title"] . "</h1><a href=\"../" . $url . "\"><h4 style=\"color: #b417b4;\">" . $row["username"] . "</h4></a><br> <audio controls controlsList=\"nodownload\">". "<source src=\"./" . $row["filename"] . "\" type=\"audio/mpeg\"></audio></li></ul><br>");
     $userpath = "../" . $url;
     $songpath = "./" . $row["filename"]; 
-    getPlayer($row["id"], $row["title"], $row["username"], $userpath, $songpath, $row["plays"], $link);
+    getPlayer($row["id"], $row["title"], $row["username"], $userpath, $songpath, $row["plays"], $userid, $link);
 
 
 }} else {
@@ -111,7 +116,7 @@ mysqli_close($link);
 </div>
 </div>
 
-<link rel="stylesheet" href="../css/bootstrap-grid-min.css">
+<link rel="stylesheet" href="http://soundtron/css/bootstrap-grid-min.css">
 
 </body>
 
@@ -119,7 +124,7 @@ mysqli_close($link);
 <link rel="stylesheet" href="../css/bootstrap-responsive.css">
 <link rel="stylesheet" href="../css/style.css">
 
-<script src="../js/jquery.js"></script>
+<script src="http://soundtron/js/jquery.js"></script>
 <script src="../js/bootstrap-386.js"></script>
 <script src="../js/bootstrap-transition.js"></script>
 <script src="../js/bootstrap-alert.js"></script>
@@ -136,18 +141,36 @@ mysqli_close($link);
 <script src="../js/bootstrap-affix.js"></script>
 
 <!-- custom javascript -->
-<script src="../js/play-counter.js"></script>
+
+<script src="http://soundtron/js/play-counter.js"></script>
+
 <script>
 $(".upvote").hover(function(){
-		this.src = "http://soundtron/img/up-arrow-hl.png";
+        if(this.src == "http://soundtron/img/up-arrow.png") {
+        this.src = "http://soundtron/img/up-arrow-hl.png";
+        } else if(this.src == "http://soundtron/img/up-arrow-hl.png") {
+            this.src = "http://soundtron/img/up-arrow.png";
+        }
 	}, function() {
-		this.src = "http://soundtron/img/up-arrow.png";
+        if(this.src == "http://soundtron/img/up-arrow.png") {
+        this.src = "http://soundtron/img/up-arrow-hl.png";
+        } else if(this.src == "http://soundtron/img/up-arrow-hl.png") {
+            this.src = "http://soundtron/img/up-arrow.png";
+        }
 });
 
 $(".downvote").hover(function(){
-		this.src = "http://soundtron/img/down-arrow-hl.png";
+        if(this.src == "http://soundtron/img/down-arrow.png") {
+        this.src = "http://soundtron/img/down-arrow-hl.png";
+        } else if(this.src == "http://soundtron/img/down-arrow-hl.png") {
+            this.src = "http://soundtron/img/down-arrow.png";
+        }
 	}, function() {
-		this.src = "http://soundtron/img/down-arrow.png";
+        if(this.src == "http://soundtron/img/down-arrow.png") {
+        this.src = "http://soundtron/img/down-arrow-hl.png";
+        } else if(this.src == "http://soundtron/img/down-arrow-hl.png") {
+            this.src = "http://soundtron/img/down-arrow.png";
+        }
 });
 
 </script>
