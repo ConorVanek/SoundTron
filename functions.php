@@ -109,7 +109,7 @@ function getPlayer($id, $title, $artist, $userpath, $songpath, $plays, $userid, 
                 <audio id="<?php echo($id); ?>" style="width: 100%;" controls>
                     <source src="<?php echo($songpath); ?>" type="audio/mpeg">
                 </audio>
-				<h1>Plays: <?php echo($plays); ?></h1>
+				<h1><img src="http://soundtron/img/plays.png"> <?php echo($plays); ?></h1><br>
             </div>
             <div class = "col-sm-3">
             <div class = "votes">
