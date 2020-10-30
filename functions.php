@@ -126,17 +126,17 @@ $(<?php echo("\"#upvote-" . $id . "\""); ?>).on("click", function() {
     //change arrow icon
     <?php if($userid != "0") { ?>
         if(this.src == "http://soundtron/img/up-arrow.png") {
-            if($(<?php echo("\"#downvote-" . $id . "\""); ?>).attr("src") == "http://soundtron/img/down-arrow-hl.png") {
-                $(<?php echo("\"#downvote-" . $id . "\""); ?>).attr("src") = "http://soundtron/img/down-arrow.png";
-            }
             this.src = "http://soundtron/img/up-arrow-hl.png";
         } else if(this.src == "http://soundtron/img/up-arrow-hl.png") {
+            if($(<?php echo("\"#downvote-" . $id . "\""); ?>).attr("src") == "http://soundtron/img/down-arrow-hl.png") {
+                document.getElementById(<?php echo("\"downvote-" . $id . "\""); ?>).src = "http://soundtron/img/down-arrow.png";
+            }
             this.src = "http://soundtron/img/up-arrow.png";
         }
     <?php } ?>
     // update table
 	$.post("http://soundtron/upvote.php", {id: <?php echo($id); ?>}, function(data) {
-		alert(data);
+        alert(data);
 	});
 });
 
@@ -144,11 +144,11 @@ $(<?php echo("\"#downvote-" . $id . "\""); ?>).on("click", function() {
     console.log("downvote");
     <?php if($userid != "0") { ?>
         if(this.src == "http://soundtron/img/down-arrow.png") {
-            if($(<?php echo("\"#upvote-" . $id . "\""); ?>).attr("src") == "http://soundtron/img/up-arrow-hl.png") {
-                $(<?php echo("\"#upvote-" . $id . "\""); ?>).attr("src") = "http://soundtron/img/up-arrow.png";
-            }
             this.src = "http://soundtron/img/down-arrow-hl.png";
         } else if(this.src == "http://soundtron/img/down-arrow-hl.png") {
+            if($(<?php echo("\"#upvote-" . $id . "\""); ?>).attr("src") == "http://soundtron/img/up-arrow-hl.png") {
+                document.getElementById(<?php echo("\"upvote-" . $id . "\""); ?>).src = "http://soundtron/img/up-arrow.png";
+            }
             this.src = "http://soundtron/img/down-arrow.png";
         }
     <?php } ?>
